@@ -1,0 +1,67 @@
+## 匿名函数自执行
+```
+(function(w) {
+    // code
+})(window)
+
+```
+### 1、(function {// code})
+是表达式, js会去对它求解得到返回值, 由于返回值是一 个函数, 故而遇到();时, 便会被执行
+### 2、所有代码为局部变量，不影响全局
+### 3、传递window为参数是为了加快查找速度
+- window为顶层对象，根据作用域链一层一层往外查找速度很慢
+- 方便进行代码压缩，可以随意更改形参
+### 4、传递undefined防止undefined在外部被修改
+- 在IE8的情况下，undefined可以被jQuery修改
+- 在IE10下则不行
+
+### 5、不使用'use strict'
+- 兼容性问题
+- 八进制报错
+
+### 6、rootjQuery 实际是 jquery(document)
+- 为了方便压缩代码
+- 为了方便代码的后期维护，可通过变量名了解功能
+
+### 7、typeof undefined （返回字符串） 为了充分判断是否定义
+在IE9的请xmlNode对象下
+```
+// 使用
+typeof xmlNode.method
+// 代替
+xmlNode.method !== undefined
+```
+才能准确判断出是否定义
+
+### 8、通过_$与jQuery防止冲突
+防止window对象中的$,jQuery与库中的冲突，使用_$保存
+
+### 9、jQuery面向对象的构造方法
+```
+// 传统面向对象构造方法
+fucntion Eg() {
+}
+Eg.prototype.init = function() {
+}
+Eg.prototype.css = function() {
+}
+
+let a = new Eg()
+a.init()
+a.css()
+// jQuery构造方法
+function jQuery() {
+    return new jQuery.prototype.init()    
+}
+jQuery.prototype.init = function() {
+}
+jQuery.prototype.css = function() {
+}
+
+jQuery.prototype.init.prototype = jQuery.prototype
+
+jQuery().css()
+```
+- 简化对象的调用方式，避免繁琐操作
+- 初始化的时候即调用了Init(),不需要再次调用
+- 调用即创建对象，不需要再new,已经拥有方法
