@@ -70,7 +70,7 @@ var
 	core_rnotwhite = /\S+/g,
 
 	// A simple way to check for HTML strings
-	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
+	// Prioritize（优先处理） #id over <tag> to avoid XSS via location.hash (#9521)
 	// Strict HTML recognition (#11290: must start with <)
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
 
@@ -118,6 +118,7 @@ jQuery.fn = jQuery.prototype = {
 
 			// Match html or make sure no context is specified for #id
 			if ( match && (match[1] || !context) ) {
+				// 标签和ID可进入
 
 				// HANDLE: $(html) -> $(array)
 				if ( match[1] ) {
