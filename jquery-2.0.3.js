@@ -122,25 +122,29 @@ jQuery.fn = jQuery.prototype = {
 
 				// HANDLE: $(html) -> $(array)
 				if ( match[1] ) {
+					// 判断$('li',document) $('li',$(document))
 					context = context instanceof jQuery ? context[0] : context;
 
 					// scripts is true for back-compat
+					// 字符串转换成节点数组
 					jQuery.merge( this, jQuery.parseHTML(
+						// 通过merge函数将数组转换为json
 						match[1],
 						context && context.nodeType ? context.ownerDocument || context : document,
-						true
+						true // 让script标签能够通过字符串添加进来
 					) );
 
 					// HANDLE: $(html, props)
+					// rsingleTag识别单标签 <li> or <li></li>
 					if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {
 						for ( match in context ) {
 							// Properties of context are called as methods if possible
 							if ( jQuery.isFunction( this[ match ] ) ) {
-								this[ match ]( context[ match ] );
+								this[ match ]( context[ match ] ); // 调用对应的函数方法如{html:'abcd'} => $().html('abcd')
 
 							// ...and otherwise set as attributes
 							} else {
-								this.attr( match, context[ match ] );
+								this.attr( match, context[ match ] );// 没有方法则增加相应的属性
 							}
 						}
 					}
