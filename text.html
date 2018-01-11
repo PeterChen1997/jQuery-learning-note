@@ -14,12 +14,9 @@
 
 <script src="./jquery-2.0.3.js"></script>
 <script>
-    let a = [1,2,3]
-    a = $.map(a, function(ele, i) {
-        return ele = ele + i
-    })
-    console.log(a)
-    a = a.map(ele => ele - 1)
+    let a = {name: {age : 30}}
+    let b = {name: {year: 1997}}
+    $.extend(true, a, b)
     console.log(a)
 </script>
 </html>
